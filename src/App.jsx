@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react"
 function App() {
   const canvasRef = useRef(null);
   const positionRef = useRef(10);
+  const obstacleXRef = useRef(300);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,13 +29,20 @@ function App() {
 
       // Red rectangle (obstacle)
       ctx.beginPath();
-      ctx.rect(100, 150, 150, 100);
+      ctx.rect(obstacleXRef.current, 0, 150, 200);
+      ctx.fillStyle = 'red';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.rect(obstacleXRef.current, canvas.height - 200, 150, 200);
       ctx.fillStyle = 'red';
       ctx.fill();
 
       positionRef.current += 3;
 
-      animationFrameId = requestAnimationFrame(birdAnimation);
+      obstacleXRef.current -= 3;
+
+      animationFrameId = requestAnimationFrame(gameAnimation);
     };
 
     gameAnimation();
